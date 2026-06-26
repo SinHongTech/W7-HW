@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TemperatureScreen extends StatefulWidget {
-  const TemperatureScreen({super.key});
+  final VoidCallback onBack;
+  const TemperatureScreen({super.key, required this.onBack,});
 
   @override
   State<TemperatureScreen> createState() => _TemperatureScreenState();
@@ -90,6 +91,8 @@ class _TemperatureScreenState extends State<TemperatureScreen> {
                 ),
               ),
             ),
+            SizedBox(height: 20),
+            ElevatedButton(onPressed: widget.onBack, child: Text("Back"),),
           ],
         ),
       ),

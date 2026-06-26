@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import '../../../data/mock_grocery_data.dart';
 import '../../../models/grocery.dart';
 import 'grocery_form.dart';
 import 'grocery_tile.dart';
 
 class GroceryScreen extends StatefulWidget {
-  const GroceryScreen({super.key});
+  final List<GroceryItem> allgroceryItems;
+  const GroceryScreen({super.key, required this.allgroceryItems});
 
   @override
-  State<GroceryScreen> createState() => _GroceryScreenState();
+  State<GroceryScreen> createState() => GroceryScreenState();
 }
 
-class _GroceryScreenState extends State<GroceryScreen> {
+class GroceryScreenState extends State<GroceryScreen> {
   // ---------------------------------------------
   // Navigate to the form screen using showModalBottomSheet
   // ---------------------------------------------
@@ -21,13 +21,13 @@ class _GroceryScreenState extends State<GroceryScreen> {
   Future<void> onCreate() async {
     final result = await showModalBottomSheet<GroceryItem>(
       context: context,
-      builder: (context) => const GroceryForm(),
+      builder: (context) => GroceryForm(),
     );
 
     if (result == null) return;
 
     setState(() {
-      allGroceryItems.add(result);
+      widget.allgroceryItems.add(result);
     });
   }
 
@@ -35,7 +35,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
   Widget build(BuildContext context) {
     Widget content = const Center(child: Text('No items added yet.'));
 
-    if (allGroceryItems.isNotEmpty) {
+    if (widget.allgroceryItems.isNotEmpty) {
       // ---------------------------------------------
       //  Loop on groceries with an ListView builder
       //  For each grocery items, create a GroceryTile (grocery_tile.dart)
@@ -43,9 +43,9 @@ class _GroceryScreenState extends State<GroceryScreen> {
       // https://api.flutter.dev/flutter/widgets/ListView-class.html
       
       content = ListView.builder(
-        itemCount: allGroceryItems.length,
+        itemCount: widget.allgroceryItems.length,
         itemBuilder: (context, index) {
-          final item = allGroceryItems[index];
+          final item = widget.allgroceryItems[index];
           return GroceryTile(grocery: item);
         },
       );

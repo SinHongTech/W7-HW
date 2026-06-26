@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'data/mock_grocery_data.dart';
 import 'ui/screens/groceries/grocery_screen.dart';
 
 void main() {
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: const Color.fromARGB(255, 50, 58, 60),
       ),
-      home: const GroceryScreen(),
+      home: GroceryScreen(allgroceryItems: allGroceryItems,),
     );
   }
 }

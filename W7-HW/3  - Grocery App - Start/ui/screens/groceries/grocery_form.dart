@@ -26,13 +26,23 @@ class GroceryForm extends StatefulWidget {
 class GroceryFormState extends State<GroceryForm> {
   final nameController = TextEditingController();
   final quantityController = TextEditingController();
+  String errorMessage = "";
 
   void addItem() {
-    final quantity = int.tryParse(quantityController.text);
+    final quantity = int.tryParse(quantityController.text.trim());
 
     if (quantity == null || quantity <= 0) {
+      setState(() {
+        errorMessage = "Please enter a POSITIVE integer.";
+      });
       return;
-    }
+    } 
+    if (nameController.text.trim().isEmpty) {
+      setState(() {
+        errorMessage = "Please enter the name.";
+      });
+      return;
+    } 
 
     final grocery = GroceryItem(
       id: DateTime.now().toString(),
@@ -72,6 +82,8 @@ class GroceryFormState extends State<GroceryForm> {
               labelText: 'Quantity',
             ),
           ),
+          const SizedBox(height: 20),
+          Text(errorMessage, style: TextStyle(color: Colors.red),),
           const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,

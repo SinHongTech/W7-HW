@@ -10,11 +10,11 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() {
-    return _MyAppState();
+    return MyAppState();
   }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   Screen activeScreen = Screen.welcome;
 
   void showTemperature() {
@@ -32,13 +32,13 @@ class _MyAppState extends State<MyApp> {
   Widget get currentScreen {
     return switch (activeScreen) {
       Screen.welcome => WelcomeScreen(onStart: showTemperature),
-      Screen.temperature => const TemperatureScreen(),
+      Screen.temperature => TemperatureScreen(onBack: showWelcome,),
     };
   }
 
   @override
   Widget build(context) {
-    return Scaffold(
+    return Scaffold( 
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
